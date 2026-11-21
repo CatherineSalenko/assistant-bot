@@ -12,3 +12,5 @@ def greet(part: PartOfDay, user_name: str) -> str:
         return f"Доброй ночи, {user_name}!"
 
 
+def introduce(assistant_name: str) -> str:
+    return f"Я {assistant_name}, персональный помощник."
