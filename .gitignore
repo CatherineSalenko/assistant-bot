@@ -11,3 +11,6 @@ wheels/
 
 # Secrets
 .env
+
+# Voice models (large files, downloaded separately)
+models/
