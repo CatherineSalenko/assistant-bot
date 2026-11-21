@@ -1,14 +1,14 @@
 from assistant_bot.daytime import PartOfDay
 
 
-def greet(part: PartOfDay) -> str:
+def greet(part: PartOfDay, user_name: str) -> str:
     if part == PartOfDay.MORNING:
-        return "Доброе утро!"
+        return f"Доброе утро, {user_name}!"
     elif part == PartOfDay.AFTERNOON:
-        return "Добрый день!"
+        return f"Добрый день, {user_name}!"
     elif part == PartOfDay.EVENING:
-        return "Добрый вечер!"
+        return f"Добрый вечер, {user_name}!"
     else:
-        return "Доброй ночи!"
+        return f"Доброй ночи, {user_name}!"
 
 
