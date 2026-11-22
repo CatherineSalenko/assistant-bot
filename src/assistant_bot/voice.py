@@ -15,3 +15,7 @@ def play(audio: torch.Tensor) -> None:
     sd.play(audio.numpy(), 48000)
     sd.wait()
 
+
+def speak(text: str) -> None:
+    audio = synthesize(text)
+    play(audio)
