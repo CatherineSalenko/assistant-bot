@@ -10,10 +10,9 @@ def main() -> None:
     part_of_day = get_part_of_day(now)
     greeting_message = greet(part_of_day, USER_NAME)
     print(greeting_message)
-    speak(greeting_message)
     introduction_message = introduce(ASSISTANT_NAME)
     print(introduction_message)
-    speak(introduction_message)
+    speak([greeting_message, introduction_message])
 
 
 if __name__ == "__main__":
