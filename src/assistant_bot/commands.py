@@ -13,6 +13,7 @@ class AssistantStatus(Enum):
     ACTIVE = "active"
     WAITING = "waiting"
     EXIT = "exit"
+    SLEEP = "sleep"
 
 
 def has_any_word(command: str, words: tuple[str,...]) -> bool:
@@ -22,10 +23,10 @@ def has_any_word(command: str, words: tuple[str,...]) -> bool:
     return False
 
 # команды
-def handle(command: str) -> tuple[AssistantStatus, list[str]]:
+def handle(status: AssistantStatus, command: str) -> tuple[AssistantStatus, list[str]]:
     if has_any_word(command, TIME_WORDS):
         time = get_datetime(datetime.now())
-        return AssistantStatus.ACTIVE, [f"Сейчас {time['hours']} {time['minutes']}"]
+        return AssistantStatus.WAITING, [f"Сейчас {time['hours']} {time['minutes']}"]
 
     elif has_any_word(command, EXIT_WORDS):
         part_of_day = get_part_of_day(datetime.now())
