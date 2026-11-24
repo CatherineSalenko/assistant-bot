@@ -1,6 +1,6 @@
 from datetime import datetime
 from assistant_bot.daytime import get_part_of_day
-from assistant_bot.greeting import greet, introduce
+from assistant_bot.phrases import greet, introduce
 from assistant_bot.settings import USER_NAME, ASSISTANT_NAME
 from assistant_bot.voice import speak
 

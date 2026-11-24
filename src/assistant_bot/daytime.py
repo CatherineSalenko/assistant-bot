@@ -18,3 +18,6 @@ def get_part_of_day(now: datetime) -> PartOfDay:
         return PartOfDay.EVENING
     else:
         return PartOfDay.NIGHT
+
+
+
