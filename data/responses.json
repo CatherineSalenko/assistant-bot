@@ -1,0 +1,60 @@
+{
+    "greeting": {
+        "morning": [
+            "Доброе утро, {user_name}!",
+            "Прекрасное утро, {user_name}!"
+        ],
+        "afternoon": [
+            "Добрый день, {user_name}!",
+            "Замечательный день, {user_name}!"
+        ],
+        "evening": [
+            "Добрый вечер, {user_name}!"
+        ],
+        "night": [
+            "Доброй ночи, {user_name}!"
+        ],
+        "default": [
+            "Рада вас видеть, {user_name}!"
+        ]
+    },
+    "goodbye": {
+        "morning": [
+            "Хорошего дня, {user_name}!"
+        ],
+        "afternoon": [
+            "Хорошего дня, {user_name}!"
+        ],
+        "evening": [
+            "Хорошего вечера, {user_name}!"
+        ],
+        "night": [
+            "Спокойной ночи, {user_name}!"
+        ],
+        "default": [
+            "До свидания, {user_name}!",
+            "Всего доброго, {user_name}!"
+        ]
+    },
+    "time": [
+        "Сейчас {hours} {minutes}"
+    ],
+    "introduce": [
+        "Я {assistant_name}, персональный помощник."
+    ],
+    "call": [
+        "Слушаю вас, {user_name}!",
+        "Слушаю {user_name}",
+        "У аппарата",
+        "Я тут",
+        "Чем могу помочь {user_name} ?",
+        "Чем могу вам помочь {user_name}?",
+        "Чем могу помочь ?"
+    ],
+    "mistakes": {
+        "default": [
+            "Извините, я не понимаю эту команду.",
+            "Не понимаю вас {user_name}"
+        ]
+    }
+}

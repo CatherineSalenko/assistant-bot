@@ -1,11 +1,12 @@
 from datetime import datetime
-from assistant_bot.phrases import get_datetime, say_goodbye, greet
+from assistant_bot.phrases import get_datetime, say_goodbye, greet, respond_to_call, say_mistake
 from enum import Enum
 from assistant_bot.daytime import get_part_of_day
-from assistant_bot.settings import USER_NAME
+from assistant_bot.settings import ASSISTANT_NAME, USER_NAME
 from assistant_bot.intents import recognize_command, data
 
 GREETING_WORDS = sorted(data["greeting"], key=len, reverse=True)
+
 
 class AssistantStatus(Enum):
     ACTIVE = "active"
@@ -27,16 +28,25 @@ def handle_exit() -> str:
 
 def handle_time() -> str:
     time = get_datetime(datetime.now())
-    return f"Сейчас {time['hours']} {time['minutes']}"
+    time_message = (f"Сейчас {time['hours']} {time['minutes']}").strip()
+    return time_message
 
 
 def handle_mistake() -> str:
-    return "Извините, я не понимаю эту команду."
+    mistake_message = say_mistake(USER_NAME)
+    return mistake_message
 
+def handle_call() ->str:
+    call_message = respond_to_call(USER_NAME)
+    return call_message
 
 # команды
 def handle(status: AssistantStatus, command_text: str) -> tuple[AssistantStatus, list[str]]:
     responses = []
+
+    if ASSISTANT_NAME.lower() in command_text:
+        command_text = command_text.replace(ASSISTANT_NAME.lower(), "").strip()
+
 
     for word in GREETING_WORDS:
         if word in command_text:
@@ -45,6 +55,8 @@ def handle(status: AssistantStatus, command_text: str) -> tuple[AssistantStatus,
             break
 
     if not command_text:
+        if not responses:
+            responses.append(handle_call())
         status = AssistantStatus.WAITING
         return status, responses
 
