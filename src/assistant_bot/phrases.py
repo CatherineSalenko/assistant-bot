@@ -7,16 +7,14 @@ import random
 from assistant_bot.settings import ASSISTANT_NAME, USER_NAME
 
 
-HOURS = ("час", "часа", "часов")
-MINUTES = ("минута", "минуты", "минут")
-DEGREES = ("градус", "градуса", "градусов")
-
-
 with open("data/responses.json", encoding="utf-8") as file:
     responses_file = json.load(file)
 
+with open("data/plural.json", encoding="utf-8") as file:
+    plural_file = json.load(file)
 
-def greet(part: PartOfDay, user_name: str) -> str:
+
+def get_message_greet(part: PartOfDay, user_name: str) -> str:
     default_phrases = responses_file["greeting"]["default"]
 
     if part == PartOfDay.MORNING:
@@ -35,8 +33,7 @@ def greet(part: PartOfDay, user_name: str) -> str:
     return greet_message
 
 
-
-def say_goodbye(part: PartOfDay, user_name: str) -> str:
+def get_message_goodbye(part: PartOfDay, user_name: str) -> str:
     default_phrases = responses_file["goodbye"]["default"]
 
     if part == PartOfDay.MORNING or part == PartOfDay.AFTERNOON:
@@ -52,19 +49,19 @@ def say_goodbye(part: PartOfDay, user_name: str) -> str:
     return goodbye_message
 
 
-def introduce(assistant_name: str) -> str:
+def get_message_introduce(assistant_name: str) -> str:
     introduce_phras = random.choice(responses_file["introduce"])
     introduce_message = introduce_phras.format(assistant_name = ASSISTANT_NAME)
     return introduce_message
 
 
-def respond_to_call(user_name: str) ->str:
+def get_message_call(user_name: str) ->str:
     call_phras = random.choice(responses_file["call"])
     call_message = call_phras.format(user_name = user_name)
     return call_message
 
 
-def say_mistake(user_name:str) ->str:
+def get_message_mistake(user_name:str) ->str:
     default_phrases = responses_file["mistakes"]["default"]
     #mistake_phras = random.choice(responses_file["mistakes"])
     all_phrases = default_phrases
@@ -73,7 +70,7 @@ def say_mistake(user_name:str) ->str:
     return mistake_message
 
 # форма звучания слова в зависимости от числа
-def get_plural_form(number: int, forms: tuple[str, str, str])-> str:
+def get_plural_form(number: int, forms: list[str])-> str:
     one, few, many = forms
     last_digit = number % 10
 
@@ -87,10 +84,11 @@ def get_plural_form(number: int, forms: tuple[str, str, str])-> str:
         return_str =  many
     return return_str
 
-def get_datetime(now: datetime) ->dict:
+
+def get_time_word(now: datetime) ->dict:
     hours = now.hour
     time_hours_number_to_str = n2w(hours, lang='ru')
-    time_hours_str = get_plural_form(hours, HOURS)
+    time_hours_str = get_plural_form(hours, plural_file["hours"])
     hours_str = f"{time_hours_number_to_str} {time_hours_str}"
 
     minutes = now.minute
@@ -98,10 +96,19 @@ def get_datetime(now: datetime) ->dict:
         minutes_str = ""
     else:
         time_minutes_number_to_str = n2w(minutes, lang='ru', gender="f")
-        time_minutes_str = get_plural_form(minutes, MINUTES)
+        time_minutes_str = get_plural_form(minutes, plural_file["minutes"])
         minutes_str = f"{time_minutes_number_to_str} {time_minutes_str}"
 
     time = {"hours": hours_str, "minutes": minutes_str}
     return time
 
+
+def get_message_time(now: datetime)-> str:
+    time_dict = get_time_word(now)
+    hours = time_dict["hours"]
+    minutes = time_dict["minutes"]
+
+    time_phrases = random.choice(responses_file["time"])
+    time_message = time_phrases.format(hours = hours, minutes = minutes).strip()
+    return time_message
 

@@ -1,5 +1,5 @@
 from datetime import datetime
-from assistant_bot.phrases import get_datetime, say_goodbye, greet, respond_to_call, say_mistake
+from assistant_bot.phrases import  get_message_goodbye, get_message_greet, get_message_call, get_message_mistake, get_message_time
 from enum import Enum
 from assistant_bot.daytime import get_part_of_day
 from assistant_bot.settings import ASSISTANT_NAME, USER_NAME
@@ -17,27 +17,26 @@ class AssistantStatus(Enum):
 
 def handle_greeting() -> str:
     part_of_day = get_part_of_day(datetime.now())
-    greeting_message = greet(part_of_day, USER_NAME)
+    greeting_message = get_message_greet(part_of_day, USER_NAME)
     return greeting_message
 
 def handle_exit() -> str:
     part_of_day = get_part_of_day(datetime.now())
-    goodbye_message = say_goodbye(part_of_day, USER_NAME)
+    goodbye_message = get_message_goodbye(part_of_day, USER_NAME)
     return goodbye_message
 
 
 def handle_time() -> str:
-    time = get_datetime(datetime.now())
-    time_message = (f"Сейчас {time['hours']} {time['minutes']}").strip()
+    time_message = get_message_time(datetime.now())
     return time_message
 
 
 def handle_mistake() -> str:
-    mistake_message = say_mistake(USER_NAME)
+    mistake_message = get_message_mistake(USER_NAME)
     return mistake_message
 
 def handle_call() ->str:
-    call_message = respond_to_call(USER_NAME)
+    call_message = get_message_call(USER_NAME)
     return call_message
 
 # команды
